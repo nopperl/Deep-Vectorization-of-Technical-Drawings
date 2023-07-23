@@ -54,7 +54,7 @@ def main(options, intermediate_output=None, control_points_n=3, dtype=torch.floa
         confident = model_output[:, :, -1] >= min_confidence
         widths = model_output[:, :, -2][confident].reshape(-1)
         the_width = np.percentile(widths, the_width_percentile)
-        repatch_scale = int(round(the_width / 2))
+        repatch_scale = max(int(round(the_width / 2)), 1)
         logger.info(f'\tthe width is {the_width}')
         logger.info(f'\tthe width percentile is {the_width_percentile}')
         logger.info(f'\trepatch scale is {repatch_scale}')
