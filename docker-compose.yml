@@ -1,0 +1,22 @@
+version: "3.9"
+name: deepvectechdraw
+services:
+  gpu:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    entrypoint: /code/Deep-Vectorization-of-Technical-Drawings/entrypoint.sh
+    volumes:
+      - ./:/code/Deep-Vectorization-of-Technical-Drawings
+      - ./data:/data
+      - ./logs:/logs
+    tmpfs:
+      - /tmp
+    shm_size: 128G
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
